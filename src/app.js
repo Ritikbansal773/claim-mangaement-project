@@ -17,11 +17,11 @@ app.use(express.static("public"));
 app.use(cookieParser());
 
 //routes import
-
-
+import userRouter from "./routes/policyholder.routes.js";
+import providerRouter from "./routes/policyprovider.routes.js";
 //routes declaration
-
-
+app.use("/api/v1/users", userRouter);
+app.use("/api/v1/provider", providerRouter);
 
 
 export { app };
