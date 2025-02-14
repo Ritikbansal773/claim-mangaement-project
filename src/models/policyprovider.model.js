@@ -90,8 +90,8 @@ policyProviderSchema.methods.generateAccessToken = function () {
     {
       _id: this._id,
       email: this.email,
-      username: this.companyName,
-      fullName: this.brandName,
+      companyName: this.companyName,
+      brandName: this.brandName,
     },
     process.env.ACCESS_TOKEN_SECRET,
     {
@@ -103,6 +103,9 @@ policyProviderSchema.methods.generateRefreshToken = function () {
   return jwt.sign(
     {
       _id: this._id,
+      email: this.email,
+      companyName: this.companyName,
+      brandName: this.brandName,
     },
     process.env.REFRESH_TOKEN_SECRET,
     {
