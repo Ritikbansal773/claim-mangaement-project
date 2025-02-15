@@ -365,8 +365,5 @@ await PolicyProvider.updateOne(
 export {
   createpolicy,
   addpolicy,
-  getAllPolicies,
-  updatePolicy,
-  deletepolicy,
-  removePolicy,
+  
 };
