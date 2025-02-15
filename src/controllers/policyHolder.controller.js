@@ -165,4 +165,6 @@ const loginholder = asyncHandler(async (req, res) => {
     );
 });
 
+
+
 export { registerpolicyholder, loginholder };
