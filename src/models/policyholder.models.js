@@ -16,7 +16,7 @@ const policyHolderSchema = new Schema(
       type: String,
       required: true,
       unique: true,
-      lowecase: true, // <-- Note: There is a typo here; it should be "lowercase"
+      lowercase: true, // Fixed typo from "lowecase"
       trim: true,
     },
     fullName: {
@@ -50,24 +50,32 @@ const policyHolderSchema = new Schema(
     refreshToken: {
       type: String, // Used for storing refresh tokens for authentication
     },
+    // New field: an array to store claim IDs (references to Claim model)
+    claims: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Claim",
+      },
+    ],
   },
   {
     timestamps: true, // Automatically creates "createdAt" and "updatedAt" fields
   }
 );
 
-
+// Pre-save hook to hash password if modified
 policyHolderSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
-
   this.password = await bcrypt.hash(this.password, 10);
   next();
 });
 
+// Instance method to compare password
 policyHolderSchema.methods.isPasswordCorrect = async function (password) {
   return await bcrypt.compare(password, this.password);
 };
 
+// Instance method to generate an access token
 policyHolderSchema.methods.generateAccessToken = function () {
   return jwt.sign(
     {
@@ -82,6 +90,8 @@ policyHolderSchema.methods.generateAccessToken = function () {
     }
   );
 };
+
+// Instance method to generate a refresh token
 policyHolderSchema.methods.generateRefreshToken = function () {
   return jwt.sign(
     {

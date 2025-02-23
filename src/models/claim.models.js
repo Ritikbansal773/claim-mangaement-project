@@ -14,6 +14,12 @@ const claimSchema = new Schema(
       ref: "policyHolder",
       required: true,
     },
+    // NEW: Reference to the PolicyProvider associated with this claim
+    policyProvider: {
+      type: Schema.Types.ObjectId,
+      ref: "PolicyProvider",
+      required: true,
+    },
     // The amount being claimed
     claimAmount: {
       type: Number,
@@ -51,15 +57,10 @@ const claimSchema = new Schema(
         type: String,
       },
     ],
-    // Array of URLs for any additional supporting documents
-    additionalDocuments: [
-      {
-        type: String,
-      },
-    ],
+    
   },
   {
-    timestamps: true, // Adds createdAt and updatedAt fields automatically
+    timestamps: true, // Automatically adds createdAt and updatedAt fields
   }
 );
 

@@ -20,10 +20,11 @@ app.use(cookieParser());
 import userRouter from "./routes/policyholder.routes.js";
 import providerRouter from "./routes/policyprovider.routes.js";
 import policyrouter from "./routes/policy.routes.js";
+import claimrouter from "./routes/claim.routes.js";
 //routes declaration
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/provider", providerRouter);
 app.use("/api/v1/policy", policyrouter);
-
+app.use("/api/v1/claim", claimrouter);
 
 export { app };

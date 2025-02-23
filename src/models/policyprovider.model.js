@@ -67,12 +67,18 @@ const policyProviderSchema = new Schema(
     refreshToken: {
       type: String,
     },
+    // New field to store claims associated with the provider.
+    claims: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Claim",
+      },
+    ],
   },
   {
     timestamps: true, // Automatically adds createdAt and updatedAt fields.
   }
 );
-
 
 policyProviderSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
@@ -99,6 +105,7 @@ policyProviderSchema.methods.generateAccessToken = function () {
     }
   );
 };
+
 policyProviderSchema.methods.generateRefreshToken = function () {
   return jwt.sign(
     {
